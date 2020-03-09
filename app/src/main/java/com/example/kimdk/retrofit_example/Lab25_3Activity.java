@@ -31,7 +31,7 @@ public class Lab25_3Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lab25_3);
-        recyclerView=findViewById(R.id.lab3_list);
+        recyclerView = findViewById(R.id.lab3_list);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
