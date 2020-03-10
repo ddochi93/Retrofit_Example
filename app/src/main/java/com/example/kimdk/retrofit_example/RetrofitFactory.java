@@ -4,7 +4,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitFactory {
-    private static String BASE_URL = "https://newsapi.org";
+    private static String BASE_URL = "http://ec2-52-79-156-63.ap-northeast-2.compute.amazonaws.com:8080/";
 
 //    static Retrofit getRetrofit() {
 //        return new Retrofit.Builder()
