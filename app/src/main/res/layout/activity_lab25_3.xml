@@ -10,14 +10,15 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/lab3_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/floatingActionButton"
-        android:layout_width="40dp"
-        android:layout_height="20dp"
-        android:clickable="true"
-        app:srcCompat="@android:drawable/ic_input_add" />
 
+    <Button
+        android:id="@+id/addBtn"
+        android:layout_weight="10"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:text="새 메모 추가" />
 
 </LinearLayout>

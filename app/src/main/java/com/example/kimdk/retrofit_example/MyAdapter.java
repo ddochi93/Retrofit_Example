@@ -1,13 +1,13 @@
 package com.example.kimdk.retrofit_example;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
@@ -84,7 +84,34 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(holder.itemDescView.getContext(), holder.itemTitleView.getText().toString(), Toast.LENGTH_SHORT).show();
+                //Toast.makeText(holder.itemDescView.getContext(), holder.itemTitleView.getText().toString(), Toast.LENGTH_SHORT).show();
+                final AlertDialog.Builder builder = new AlertDialog.Builder(holder.delButton.getContext());
+                builder.setTitle("수정");
+                builder.setMessage("수정하시겠습니까?");
+                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        int id = Integer.parseInt(holder.itemTimeView.getText().toString());
+                        String title = holder.itemTitleView.getText().toString();
+                        String content = holder.itemDescView.getText().toString();
+
+                        Intent intent = new Intent(holder.delButton.getContext(), ModifyingActivity.class);
+                        intent.putExtra("id", id);
+                        intent.putExtra("title", title);
+                        intent.putExtra("content", content);
+                        holder.delButton.getContext().startActivity(intent); //delButton으로 가능?
+
+                    }
+                });
+
+
+                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        dialogInterface.cancel();
+                    }
+                });
+                builder.show();
             }
         });
 
