@@ -11,13 +11,14 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kimdk.retrofit_example.data.Memobean;
-import com.example.kimdk.retrofit_example.modify.ModifyingActivity;
 import com.example.kimdk.retrofit_example.R;
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
+import com.example.kimdk.retrofit_example.data.Memobean;
+import com.example.kimdk.retrofit_example.modify.ModifyActivity;
 
 import java.util.List;
 
@@ -28,9 +29,11 @@ import retrofit2.Response;
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
     private List<Memobean> memos;
+    private FragmentActivity activity;
 
-    public MyAdapter(List<Memobean> memos) {
+    public MyAdapter(List<Memobean> memos, FragmentActivity activity ) {
         this.memos = memos;
+        this.activity = activity;
     }
 
     @Override
@@ -43,6 +46,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_lab3, parent, false);
+
         return new ItemViewHolder(view);
     }
 
@@ -50,7 +54,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
 
         Memobean memo = memos.get(position);
-
 
         Integer id = memo.getId();
         String title = memo.getTitle();
@@ -63,7 +66,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
         holder.delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(holder.delButton.getContext());
+                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle("삭제ㅋ");
                 builder.setMessage("정말 삭제하시겠습니까?");
                 builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
@@ -91,7 +94,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
             @Override
             public void onClick(View view) {
                 //Toast.makeText(holder.itemDescView.getContext(), holder.itemTitleView.getText().toString(), Toast.LENGTH_SHORT).show();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(holder.delButton.getContext());
+                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
                 builder.setTitle("수정");
                 builder.setMessage("수정하시겠습니까?");
                 builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
@@ -101,11 +104,13 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
                         String title = holder.itemTitleView.getText().toString();
                         String content = holder.itemDescView.getText().toString();
 
-                        Intent intent = new Intent(holder.delButton.getContext(), ModifyingActivity.class);
+                        Intent intent = new Intent(activity, ModifyActivity.class);
                         intent.putExtra("id", id);
                         intent.putExtra("title", title);
                         intent.putExtra("content", content);
-                        holder.delButton.getContext().startActivity(intent); //delButton으로 가능?
+
+                        //////
+                        activity.startActivityForResult(intent,5000); //delButton으로 가능?
 
                     }
                 });
@@ -121,16 +126,6 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
             }
         });
 
-
-//        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
-//            @Override
-//            public boolean onLongClick(View view) {
-//                remove(holder.getAdapterPosition());
-//                return false;
-//            }
-//        });
-
-        ///
     }
 
     public void remove(int position, int id) {

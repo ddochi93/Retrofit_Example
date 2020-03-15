@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void updateView(List<Memobean> memoList) {
-        MyAdapter adapter = new MyAdapter(memoList);
+        MyAdapter adapter = new MyAdapter(memoList, this);
         recyclerView.setAdapter(adapter);
     }
 
