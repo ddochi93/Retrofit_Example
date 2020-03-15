@@ -1,5 +1,6 @@
 package com.example.kimdk.retrofit_example;
 
+import com.example.kimdk.retrofit_example.data.Memobean;
 import com.google.gson.JsonObject;
 
 import java.util.List;

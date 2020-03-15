@@ -13,7 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kimdk.retrofit_example.Memobean;
+import com.example.kimdk.retrofit_example.data.Memobean;
 import com.example.kimdk.retrofit_example.modify.ModifyingActivity;
 import com.example.kimdk.retrofit_example.R;
 import com.example.kimdk.retrofit_example.RetrofitFactory;

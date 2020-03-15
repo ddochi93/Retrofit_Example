@@ -2,7 +2,7 @@ package com.example.kimdk.retrofit_example.main;
 
 import android.util.Log;
 
-import com.example.kimdk.retrofit_example.Memobean;
+import com.example.kimdk.retrofit_example.data.Memobean;
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
 
@@ -39,24 +39,5 @@ public class MainPresenter implements  MainContract.Presenter {
             }
         });
     }
-//    RetrofitService networkService = RetrofitFactory.create();
-//        networkService.getMemo().enqueue(new Callback<List<Memobean>>() {
-//        @Override
-//        public void onResponse(Call<List< Memobean >> call, Response<List<Memobean>> response) {
-//            if(response.isSuccessful()) {
-//                List<Memobean> res = response.body();
-//                for(Memobean m : res) {
-//                    Log.e("eoroor",m.getTitle());
-//                }
-//                MyAdapter adapter = new MyAdapter(response.body());
-//                recyclerView.setAdapter(adapter);
-//            }
-//        }
-//
-//        @Override
-//        public void onFailure(Call<List<Memobean>> call, Throwable t) {
-//            //t.printStackTrace();
-//            Log.e("eoroor","occured");
-//        }
-//    });
+
 }

@@ -11,14 +11,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kimdk.retrofit_example.Memobean;
-import com.example.kimdk.retrofit_example.PostingActivity;
+import com.example.kimdk.retrofit_example.data.Memobean;
+import com.example.kimdk.retrofit_example.post.PostActivity;
 import com.example.kimdk.retrofit_example.R;
 
 import java.util.List;
 
 
-public class Lab25_3Activity extends AppCompatActivity implements MainContract.View {
+public class MainActivity extends AppCompatActivity implements MainContract.View {
     private MainContract.Presenter presenter;
     RecyclerView recyclerView;
     Button addBtn;
@@ -37,7 +37,7 @@ public class Lab25_3Activity extends AppCompatActivity implements MainContract.V
         addBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PostingActivity.class);
+                Intent intent = new Intent(view.getContext(), PostActivity.class);
                 startActivityForResult(intent,4000);  //4000의미 있나?
             }
         });
@@ -66,7 +66,7 @@ public class Lab25_3Activity extends AppCompatActivity implements MainContract.V
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("result","성공");
+        Log.d("result","result : " + resultCode + ", resquest : " + requestCode);
         super.onActivityResult(requestCode, resultCode, data);
         presenter.getMemoList();
     }

@@ -9,7 +9,7 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.kimdk.retrofit_example.Memobean;
+import com.example.kimdk.retrofit_example.data.Memobean;
 import com.example.kimdk.retrofit_example.R;
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
