@@ -1,4 +1,4 @@
-package com.example.kimdk.retrofit_example;
+package com.example.kimdk.retrofit_example.modify;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +9,10 @@ import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.kimdk.retrofit_example.Memobean;
+import com.example.kimdk.retrofit_example.R;
+import com.example.kimdk.retrofit_example.RetrofitFactory;
+import com.example.kimdk.retrofit_example.RetrofitService;
 import com.google.gson.JsonObject;
 
 import retrofit2.Call;
@@ -53,6 +57,8 @@ public class ModifyingActivity extends AppCompatActivity {
                     public void onResponse(Call<Memobean> call, Response<Memobean> response) {
                         if(response.isSuccessful()) {
                             Log.d("success","suc");
+
+                            finish();
                         }
                         Log.d("success", response.body().toString());
                     }

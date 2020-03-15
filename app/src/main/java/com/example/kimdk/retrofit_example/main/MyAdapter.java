@@ -1,4 +1,4 @@
-package com.example.kimdk.retrofit_example;
+package com.example.kimdk.retrofit_example.main;
 
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -12,6 +12,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.kimdk.retrofit_example.Memobean;
+import com.example.kimdk.retrofit_example.modify.ModifyingActivity;
+import com.example.kimdk.retrofit_example.R;
+import com.example.kimdk.retrofit_example.RetrofitFactory;
+import com.example.kimdk.retrofit_example.RetrofitService;
 
 import java.util.List;
 
