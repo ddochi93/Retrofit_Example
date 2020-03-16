@@ -4,54 +4,50 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kimdk.retrofit_example.data.Memobean;
-import com.example.kimdk.retrofit_example.post.PostActivity;
 import com.example.kimdk.retrofit_example.R;
+import com.example.kimdk.retrofit_example.data.Memobean;
+import com.example.kimdk.retrofit_example.databinding.ActivityMainBinding;
+import com.example.kimdk.retrofit_example.post.PostActivity;
 
 import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity implements MainContract.View {
+    private ActivityMainBinding mBinding;
     private MainContract.Presenter presenter;
-    RecyclerView recyclerView;
-    Button addBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
 
-        recyclerView = findViewById(R.id.lab3_list);
-        addBtn = findViewById(R.id.addBtn);
+        setDataBinding();
+        initSetting();
 
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
 
+    private void setDataBinding() {
+        mBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
+        mBinding.setActivity(this);
+    }
 
-        addBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(), PostActivity.class);
-                startActivityForResult(intent,4000);  //4000의미 있나?
-            }
-        });
-
-
+    private void initSetting() {
         presenter = new MainPresenter();
         presenter.setView(this);
         presenter.getMemoList();
+
+        mBinding.memoListRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
     @Override
     public void updateView(List<Memobean> memoList) {
         MyAdapter adapter = new MyAdapter(memoList, this);
-        recyclerView.setAdapter(adapter);
+        mBinding.memoListRecycler.setAdapter(adapter);
     }
 
     @Override
@@ -64,9 +60,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     }
 
+    //add_btn 눌렀을때 실행
+    public void navigateToPost(View view) {
+        Intent intent = new Intent(this, PostActivity.class);
+        startActivityForResult(intent, 4000);
+    }
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        Log.d("result","result : " + resultCode + ", resquest : " + requestCode);
+        Log.d("result", "result : " + resultCode + ", resquest : " + requestCode);
         super.onActivityResult(requestCode, resultCode, data);
         presenter.getMemoList();
     }
