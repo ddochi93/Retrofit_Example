@@ -5,7 +5,8 @@ import com.google.gson.JsonObject;
 
 import java.util.List;
 
-import retrofit2.Call;
+import io.reactivex.Observable;
+import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -14,23 +15,18 @@ import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface RetrofitService {
-//    @GET("/v2/everything")
-//    Call<PageListModel> getList(@Query("q")String q,
-//                                @Query("apiKey")String apiKey,
-//                                @Query("page")long page,
-//                                @Query("pageSize")int pageSize);
 
     @GET("/memo")
-    Call<List<Memobean>> getMemo();
+    Observable<List<Memobean>> getMemo();
 
     @DELETE("/memo/{id}")
-    Call<Void> delMemo(@Path("id") int id);
+    Observable<Response<Void>> delMemo(@Path("id") int id);
 
 
     @PUT("/memo/{id}")
-    Call<Memobean> updateMemo(@Path("id") int id,@Body JsonObject body);
+    Observable<Memobean> updateMemo(@Path("id") int id,@Body JsonObject body);
 
     @POST("/memo")
-    Call<Void> postMemo(@Body JsonObject memo);
+    Observable<Response<Void>> postMemo(@Body JsonObject memo);
 
 }

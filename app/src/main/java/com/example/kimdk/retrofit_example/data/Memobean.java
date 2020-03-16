@@ -3,6 +3,7 @@ package com.example.kimdk.retrofit_example.data;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+
 public class Memobean {
     @SerializedName("id")
     @Expose

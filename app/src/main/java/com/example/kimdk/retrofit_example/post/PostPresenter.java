@@ -1,14 +1,14 @@
 package com.example.kimdk.retrofit_example.post;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
 import com.google.gson.JsonObject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class PostPresenter implements PostContract.Presenter {
     private PostContract.View view;
@@ -17,6 +17,7 @@ public class PostPresenter implements PostContract.Presenter {
         this.view = view;
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void submitPost(String title, String content) {
         JsonObject object = new JsonObject();
@@ -24,20 +25,14 @@ public class PostPresenter implements PostContract.Presenter {
         object.addProperty("content", content);
 
         RetrofitService service = RetrofitFactory.create();
-        service.postMemo(object).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if (response.isSuccessful()) {
-                    Log.d("success", "suc");
-                    view.finishPost();
-                }
-                //Log.d("success", response.body().toString());
-            }
-
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("fail", t.toString());
-            }
-        });
+        service.postMemo(object)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aVoid -> {
+                            view.finishPost();
+                        }
+                        , throwable -> {
+                            Log.e("fail", throwable.toString());
+                        });
     }
 }

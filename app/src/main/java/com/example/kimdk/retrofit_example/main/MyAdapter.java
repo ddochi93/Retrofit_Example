@@ -1,5 +1,6 @@
 package com.example.kimdk.retrofit_example.main;
 
+import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
@@ -22,9 +23,8 @@ import com.example.kimdk.retrofit_example.modify.ModifyActivity;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 
 class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
@@ -62,7 +62,7 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
         holder.itemTitleView.setText(title);
         holder.itemTimeView.setText(id.toString());
         holder.itemDescView.setText(content);
-        //Glide.with(holder.itemImageView.getContext()).load(item.urlToImage).override(250, 200).into(holder.itemImageView);
+
         holder.delButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -128,27 +128,20 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
 
     }
 
+    @SuppressLint("CheckResult")
     public void remove(int position, int id) {
         RetrofitService retrofitService = RetrofitFactory.create();
-        retrofitService.delMemo(id).enqueue(new Callback<Void>() {
-            @Override
-            public void onResponse(Call<Void> call, Response<Void> response) {
-                if(response.isSuccessful()) {
-                    Log.d("debug", response.message());
-                }
-                Log.d("debug", response.code()+"");
-                Log.d("debug",response.message());
-            }
 
-            @Override
-            public void onFailure(Call<Void> call, Throwable t) {
-                Log.e("eorror",t.toString());
-            }
-        });
-
+        retrofitService.delMemo(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe( aVoid -> {
+                    Log.d("succeeeed", "Good");
+                },throwable -> {
+                    Log.e("fail",throwable.toString());
+                });
 
         memos.remove(position);
-
         notifyItemRemoved(position);
 
     }

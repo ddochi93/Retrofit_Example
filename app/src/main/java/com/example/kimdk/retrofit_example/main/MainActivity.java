@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lab25_3);
+        setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.lab3_list);
         addBtn = findViewById(R.id.addBtn);

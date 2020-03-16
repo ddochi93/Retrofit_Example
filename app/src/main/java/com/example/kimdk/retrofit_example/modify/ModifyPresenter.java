@@ -1,15 +1,14 @@
 package com.example.kimdk.retrofit_example.modify;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
-import com.example.kimdk.retrofit_example.data.Memobean;
 import com.google.gson.JsonObject;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 public class ModifyPresenter implements ModifyContract.Presenter {
     private ModifyContract.View view;
@@ -19,6 +18,7 @@ public class ModifyPresenter implements ModifyContract.Presenter {
     }
 
 
+    @SuppressLint("CheckResult")
     @Override
     public void submitModify(int id, String title, String content) {
         JsonObject object = new JsonObject();
@@ -27,19 +27,11 @@ public class ModifyPresenter implements ModifyContract.Presenter {
         object.addProperty("content",content);
 
         RetrofitService service = RetrofitFactory.create();
-        service.updateMemo(id, object).enqueue(new Callback<Memobean>() {
-            @Override
-            public void onResponse(Call<Memobean> call, Response<Memobean> response) {
-                if(response.isSuccessful()) {
-                    Log.d("success", "suc");
-                    view.finishModify();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Memobean> call, Throwable t) {
-                Log.e("fail",t.toString());
-            }
-        });
+        service.updateMemo(id, object)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(memobean -> {view.finishModify();}
+                , throwable -> {Log.e("fail",throwable.toString());
+                });
     }
 }

@@ -23,7 +23,7 @@ public class ModifyActivity extends AppCompatActivity implements ModifyContract.
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_sub);
+        setContentView(R.layout.activity_modify);
 
         presenter = new ModifyPresenter(this);
 
@@ -61,7 +61,7 @@ public class ModifyActivity extends AppCompatActivity implements ModifyContract.
                 }
             }
         });
-        
+
     }
 
     @Override
