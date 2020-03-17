@@ -1,86 +1,99 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".main.MainActivity"
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginBottom="15dp"
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:paddingTop="10dp"
-    android:paddingBottom="15dp">
+    xmlns:tools="http://schemas.android.com/tools">
+    <data>
+        <variable
+            name="memo"
+            type="com.example.kimdk.retrofit_example.data.Memobean" />
+<!--        <variable-->
+<!--            name="activity"-->
+<!--            type="com.example.kimdk.retrofit_example.main.MainActivity" />-->
+    </data>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingLeft="10dp"
-        android:paddingTop="10dp">
-
+        android:layout_marginBottom="15dp"
+        android:background="@android:color/white"
+        android:orientation="vertical"
+        android:paddingTop="10dp"
+        android:paddingBottom="15dp"
+        tools:context=".main.MainActivity">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp">
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp">
 
-            <TextView
-                tools:text="alskdjflkasjdlfkjaslkdfjlksj"
-                android:id="@+id/lab3_item_title"
-                android:layout_width="wrap_content"
+
+            <RelativeLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="#212121"
-                android:textSize="14sp" />
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp">
+
+                <TextView
+                    android:id="@+id/lab3_item_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#212121"
+                    android:textSize="14sp"
+                    android:text="@{memo.title}"
+                   />
 
 
+                <TextView
+                    android:id="@+id/lab3_item_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/lab3_item_title"
+                    android:layout_marginTop="3dp"
+                    android:textColor="#ff0000"
+                    android:textSize="12sp"
+                    android:text="@{memo.id.toString()}"
+                 />
 
-            <TextView
-                tools:text="dlajlkdfsjsalkd jaslkdj flaksdj la;s jkfklsa dj"
-                android:id="@+id/lab3_item_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/lab3_item_title"
-                android:layout_marginTop="3dp"
-                android:textColor="#ff0000"
-                android:textSize="12sp" />
+                <Button
+                    android:id="@+id/del_button"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginTop="0dp"
+                    android:layout_marginEnd="0dp"
 
-            <Button
-                android:id="@+id/del_button"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_marginTop="0dp"
-                android:layout_marginEnd="0dp"
-                android:text="삭제" />
+                    android:text="삭제" />
+
+
+            </RelativeLayout>
 
 
         </RelativeLayout>
 
 
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/lab3_item_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="3dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="10dp"
+            android:lineSpacingExtra="2dp"
+            android:paddingLeft="10dp"
+            android:textColor="#212121"
+            android:textSize="14sp"
+            tools:text="dkdlajksflj"
+            android:text="@{memo.content}"/>
 
 
-    <TextView
-        android:id="@+id/lab3_item_desc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="3dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="10dp"
-        android:lineSpacingExtra="2dp"
-        android:paddingLeft="10dp"
-        android:textColor="#212121"
-        android:textSize="14sp" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.2dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginTop="3dp"
+            android:background="#009900" />
 
-
-
-
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="0.2dp"
-        android:layout_gravity="center_vertical"
-        android:layout_marginTop="3dp"
-        android:background="#009900" />
-
-</LinearLayout>
+    </LinearLayout>
+</layout>

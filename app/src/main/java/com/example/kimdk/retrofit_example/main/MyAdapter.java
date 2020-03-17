@@ -1,24 +1,24 @@
 package com.example.kimdk.retrofit_example.main;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.kimdk.retrofit_example.R;
+import com.example.kimdk.retrofit_example.AlertUtil;
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
 import com.example.kimdk.retrofit_example.data.Memobean;
+import com.example.kimdk.retrofit_example.databinding.ItemLab3Binding;
 import com.example.kimdk.retrofit_example.modify.ModifyActivity;
 
 import java.util.List;
@@ -31,7 +31,8 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
     private List<Memobean> memos;
     private FragmentActivity activity;
 
-    public MyAdapter(List<Memobean> memos, FragmentActivity activity ) {
+
+    public MyAdapter(List<Memobean> memos, FragmentActivity activity) {
         this.memos = memos;
         this.activity = activity;
     }
@@ -44,87 +45,42 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
     @NonNull
     @Override
     public ItemViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_lab3, parent, false);
-
-        return new ItemViewHolder(view);
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        ItemLab3Binding itemLab3Binding = ItemLab3Binding.inflate(inflater, parent, false);
+        return new ItemViewHolder(itemLab3Binding, parent.getContext());
+        //  ItemLab3Binding itemLab3Binding = DataBindingUtil.inflate()
     }
 
     @Override
     public void onBindViewHolder(@NonNull final ItemViewHolder holder, int position) {
-
         Memobean memo = memos.get(position);
+        holder.bind(memo);
+        
 
-        Integer id = memo.getId();
-        String title = memo.getTitle();
-        String content = memo.getContent();
-
-        holder.itemTitleView.setText(title);
-        holder.itemTimeView.setText(id.toString());
-        holder.itemDescView.setText(content);
-
-        holder.delButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setTitle("삭제ㅋ");
-                builder.setMessage("정말 삭제하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int id = Integer.parseInt(holder.itemTimeView.getText().toString());
-                        remove(holder.getAdapterPosition(), id);
-                    }
-                });
-
-                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.show();
-            }
-
-        });
-
-
-        ///
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Toast.makeText(holder.itemDescView.getContext(), holder.itemTitleView.getText().toString(), Toast.LENGTH_SHORT).show();
-                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-                builder.setTitle("수정");
-                builder.setMessage("수정하시겠습니까?");
-                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        int id = Integer.parseInt(holder.itemTimeView.getText().toString());
-                        String title = holder.itemTitleView.getText().toString();
-                        String content = holder.itemDescView.getText().toString();
-
-                        Intent intent = new Intent(activity, ModifyActivity.class);
-                        intent.putExtra("id", id);
-                        intent.putExtra("title", title);
-                        intent.putExtra("content", content);
-
-                        //////
-                        activity.startActivityForResult(intent,5000); //delButton으로 가능?
-
-                    }
-                });
-
-
-                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.cancel();
-                    }
-                });
-                builder.show();
-            }
-        });
+//        holder.delButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                final AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+//                builder.setTitle("삭제ㅋ");
+//                builder.setMessage("정말 삭제하시겠습니까?");
+//                builder.setPositiveButton("예", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        int id = Integer.parseInt(holder.itemTimeView.getText().toString());
+//                        remove(holder.getAdapterPosition(), id);
+//                    }
+//                });
+//
+//                builder.setNegativeButton("아니오", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        dialogInterface.cancel();
+//                    }
+//                });
+//                builder.show();
+//            }
+//
+//        });
 
     }
 
@@ -135,10 +91,10 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
         retrofitService.delMemo(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe( aVoid -> {
+                .subscribe(aVoid -> {
                     Log.d("succeeeed", "Good");
-                },throwable -> {
-                    Log.e("fail",throwable.toString());
+                }, throwable -> {
+                    Log.e("fail", throwable.toString());
                 });
 
         memos.remove(position);
@@ -148,18 +104,38 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
 
 
     public static class ItemViewHolder extends RecyclerView.ViewHolder {
+        private ItemLab3Binding itemLab3Binding;
+        private Context context;
 
-        public TextView itemTitleView;
-        public TextView itemTimeView;
-        public TextView itemDescView;
-        public Button delButton;
+        public ItemViewHolder(ItemLab3Binding itemLab3Binding, Context context) {
+            super(itemLab3Binding.getRoot());
+            this.itemLab3Binding = itemLab3Binding;
+            this.context = context;
+        }
 
-        public ItemViewHolder(View view) {
-            super(view);
-            itemTitleView = view.findViewById(R.id.lab3_item_title);
-            itemTimeView = view.findViewById(R.id.lab3_item_time);
-            itemDescView = view.findViewById(R.id.lab3_item_desc);
-            delButton = view.findViewById(R.id.del_button);
+        public void bind(Memobean memo) {
+            itemLab3Binding.setMemo(memo);
+            itemLab3Binding.getRoot().setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    AlertUtil.createDialogWithTitle("수정하시겠습니까?", context, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            int id = memo.getId();
+                            String title = memo.getTitle();
+                            String content = memo.getContent();
+
+                            Intent intent = new Intent(context, ModifyActivity.class);
+                            intent.putExtra("id", id);
+                            intent.putExtra("title", title);
+                            intent.putExtra("content", content);
+
+                            //////
+                            ((Activity)context).startActivityForResult(intent, 5000);
+                        }
+                    });
+                }
+            });
         }
     }
 
