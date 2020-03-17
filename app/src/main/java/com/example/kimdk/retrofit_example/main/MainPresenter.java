@@ -12,10 +12,10 @@ import io.reactivex.schedulers.Schedulers;
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
 
-    @Override
-    public void setView(MainContract.View view) {
+    public MainPresenter(MainContract.View view) {
         this.view = view;
     }
+
 
     @SuppressLint("CheckResult")
     @Override

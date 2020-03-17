@@ -37,10 +37,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     }
 
     private void initSetting() {
-        presenter = new MainPresenter();
-        presenter.setView(this);
+        presenter = new MainPresenter(this);
         presenter.getMemoList();
-
         mBinding.memoListRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 

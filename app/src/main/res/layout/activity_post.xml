@@ -1,30 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context=".modify.ModifyActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <EditText
-        android:id="@+id/title"
-        android:hint="제목"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
-    <EditText
-        android:id="@+id/content"
-        android:hint="내용"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+    <data>
+        <variable
+            name="activity"
+            type="com.example.kimdk.retrofit_example.post.PostActivity" />
+    </data>
 
-    <Button
-        android:id="@+id/confirm"
-        android:layout_gravity="bottom"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="저장하기" />
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".modify.ModifyActivity">
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="제목" />
+
+        <EditText
+            android:id="@+id/content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="내용" />
+
+        <Button
+            android:id="@+id/confirm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom"
+            android:onClick="@{() -> activity.postButtonClicked() }"
+            android:text="저장하기" />
+
+    </LinearLayout>
+</layout>

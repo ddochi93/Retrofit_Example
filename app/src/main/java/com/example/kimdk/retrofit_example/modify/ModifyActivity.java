@@ -2,7 +2,6 @@ package com.example.kimdk.retrofit_example.modify;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -27,7 +26,6 @@ public class ModifyActivity extends AppCompatActivity implements ModifyContract.
     private void setDataBinding() {
         mBinding = DataBindingUtil.setContentView(this, R.layout.activity_modify);
         mBinding.setActivity(this);
-
     }
 
     @Override
@@ -46,7 +44,7 @@ public class ModifyActivity extends AppCompatActivity implements ModifyContract.
 
 
     //modify_btn 눌렸을때 실행.
-    public void modifyButtonClicked(View v){
+    public void modifyButtonClicked(){
         String nTitle = mBinding.title.getText().toString();
         String nContent = mBinding.content.getText().toString();
 

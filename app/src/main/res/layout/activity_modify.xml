@@ -33,7 +33,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="bottom"
-            android:onClick="@{activity::modifyButtonClicked}"
+            android:onClick="@{() -> activity.modifyButtonClicked()}"
             android:text="수정하기" />
 
     </LinearLayout>
