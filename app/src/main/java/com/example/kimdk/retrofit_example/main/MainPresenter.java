@@ -33,4 +33,19 @@ public class MainPresenter implements MainContract.Presenter {
                         });
     }
 
+    @SuppressLint("CheckResult")
+    @Override
+    public void removeFromMemoList(int id, int position) {
+        RetrofitService retrofitService = RetrofitFactory.create();
+
+        retrofitService.delMemo(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(aVoid -> {
+                    Log.d("succeeeed", "Good");
+                    view.removeItemFromAdapter(position);
+                }, throwable -> Log.e("fail", throwable.toString()));
+
+    }
+
 }

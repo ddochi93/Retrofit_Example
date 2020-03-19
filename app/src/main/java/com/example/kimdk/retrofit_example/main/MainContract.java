@@ -8,6 +8,8 @@ public interface MainContract  {
     interface View {
         void updateView(List<Memobean> memoList);
 
+        void removeItemFromAdapter(int position);
+
         void refreshView();
 
         void toastMessage(String message);
@@ -15,5 +17,7 @@ public interface MainContract  {
 
     interface Presenter {
         void getMemoList();
+
+        void removeFromMemoList(int id, int position);
     }
 }

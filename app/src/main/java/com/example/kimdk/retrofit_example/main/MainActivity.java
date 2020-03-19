@@ -21,6 +21,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity implements MainContract.View {
     private ActivityMainBinding mBinding;
     private MainContract.Presenter presenter;
+    private MyAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,8 +45,13 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void updateView(List<Memobean> memoList) {
-        MyAdapter adapter = new MyAdapter(memoList, this);
+        adapter = new MyAdapter(memoList, presenter);
         mBinding.memoListRecycler.setAdapter(adapter);
+    }
+
+    public void removeItemFromAdapter(int position) {
+        adapter.getMemos().remove(position);
+        adapter.notifyItemRemoved(position);
     }
 
     @Override
