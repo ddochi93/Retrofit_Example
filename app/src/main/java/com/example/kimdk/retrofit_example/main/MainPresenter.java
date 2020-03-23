@@ -5,12 +5,15 @@ import android.util.Log;
 
 import com.example.kimdk.retrofit_example.RetrofitFactory;
 import com.example.kimdk.retrofit_example.RetrofitService;
+import com.example.kimdk.retrofit_example.main.adapter.MainAdapterContract;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.schedulers.Schedulers;
 
 public class MainPresenter implements MainContract.Presenter {
     private MainContract.View view;
+    private MainAdapterContract.View mainAdapterView;
+    private MainAdapterContract.Model mainAdapterModel;
 
     public MainPresenter(MainContract.View view) {
         this.view = view;
@@ -43,9 +46,21 @@ public class MainPresenter implements MainContract.Presenter {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(aVoid -> {
                     Log.d("succeeeed", "Good");
-                    view.removeItemFromAdapter(position);
+                    //view.removeItemFromAdapter(position);
+                    mainAdapterModel.removeItem(position);
+                    mainAdapterView.notifyAdapter(position);
                 }, throwable -> Log.e("fail", throwable.toString()));
 
+    }
+
+    @Override
+    public void setMainAdapterModel(MainAdapterContract.Model mainAdapterModel) {
+        this.mainAdapterModel = mainAdapterModel;
+    }
+
+    @Override
+    public void setMainAdapterView(MainAdapterContract.View mainAdapterView) {
+        this.mainAdapterView = mainAdapterView;
     }
 
 }

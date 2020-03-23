@@ -38,13 +38,11 @@ public class ModifyActivity extends AppCompatActivity implements ModifyContract.
         id = intent.getIntExtra("id", -1);
         mBinding.title.setText(title);
         mBinding.content.setText(content);
-
-
     }
 
 
     //modify_btn 눌렸을때 실행.
-    public void modifyButtonClicked(){
+    public void modifyButtonClicked() {
         String nTitle = mBinding.title.getText().toString();
         String nContent = mBinding.content.getText().toString();
 

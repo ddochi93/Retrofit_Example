@@ -1,4 +1,4 @@
-package com.example.kimdk.retrofit_example.main;
+package com.example.kimdk.retrofit_example.main.adapter;
 
 import android.app.Activity;
 import android.content.Context;
@@ -15,12 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.kimdk.retrofit_example.AlertUtil;
 import com.example.kimdk.retrofit_example.data.Memobean;
 import com.example.kimdk.retrofit_example.databinding.ItemLab3Binding;
+import com.example.kimdk.retrofit_example.main.MainContract;
 import com.example.kimdk.retrofit_example.modify.ModifyActivity;
 
 import java.util.List;
 
 
-class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
+public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> implements MainAdapterContract.View, MainAdapterContract.Model {
 
 
     private List<Memobean> memos;
@@ -57,8 +58,20 @@ class MyAdapter extends RecyclerView.Adapter<MyAdapter.ItemViewHolder> {
 
     }
 
-    public List<Memobean> getMemos() {
-        return memos;
+//    public List<Memobean> getMemos() {
+//        return memos;
+//    }
+
+    @Override
+    public void notifyAdapter(int position) {
+       // notifyItemChanged(position);
+        this.notifyItemRemoved(position);
+        //notifyItemRemoved(position);
+    }
+
+    @Override
+    public void removeItem(int position) {
+        memos.remove(position);
     }
 
 

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import com.example.kimdk.retrofit_example.R;
 import com.example.kimdk.retrofit_example.data.Memobean;
 import com.example.kimdk.retrofit_example.databinding.ActivityMainBinding;
+import com.example.kimdk.retrofit_example.main.adapter.MyAdapter;
 import com.example.kimdk.retrofit_example.post.PostActivity;
 
 import java.util.List;
@@ -40,6 +41,7 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void initSetting() {
         presenter = new MainPresenter(this);
         presenter.getMemoList();
+
         mBinding.memoListRecycler.setLayoutManager(new LinearLayoutManager(this));
     }
 
@@ -47,12 +49,16 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     public void updateView(List<Memobean> memoList) {
         adapter = new MyAdapter(memoList, presenter);
         mBinding.memoListRecycler.setAdapter(adapter);
+
+        presenter.setMainAdapterModel(adapter);
+        presenter.setMainAdapterView(adapter);
+
     }
 
-    public void removeItemFromAdapter(int position) {
-        adapter.getMemos().remove(position);
-        adapter.notifyItemRemoved(position);
-    }
+//    public void removeItemFromAdapter(int position) {
+//        adapter.getMemos().remove(position);
+//        adapter.notifyItemRemoved(position);
+//    }
 
     @Override
     public void refreshView() {
